@@ -1,0 +1,169 @@
+﻿@model Laboratorio.Models.Requisicao
+
+@{ 
+    var teste = ViewData["IdTemporario"];
+}
+
+<h2>Create</h2>
+
+<h4>Requisicao</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="PacienteId" class="control-label"></label>
+                    <select asp-for="PacienteId" class="form-control" asp-items="ViewBag.PacienteId"></select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="SolicitanteId" class="control-label"></label>
+                    <select asp-for="SolicitanteId" class="form-control" asp-items="ViewBag.SolicitanteId"></select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="ConvenioId" class="control-label"></label>
+                    <select asp-for="ConvenioId" class="form-control" asp-items="ViewBag.ConvenioId"></select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="PostoColetaId" class="control-label"></label>
+                    <select asp-for="PostoColetaId" class="form-control" asp-items="ViewBag.PostoColetaId"></select>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="DataEntrega" class="control-label"></label>
+                    <input asp-for="DataEntrega" class="form-control" />
+                    <span asp-validation-for="DataEntrega" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="ExameId" class="control-label"></label>
+                    <select id="exames" asp-for="ExameId" class="form-control" asp-items="ViewBag.ExameId"></select>
+                </div>
+                <div class="col-md-2">
+                    <label> </label>
+                    <a class="form-control btn btn-info" id="addMore" onclick="addFunction(document.getElementById('exames').options[$('#exames option:selected').val()-1].text)">Adicionar</a>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Exames</div>
+                <div class="panel-body">
+                    <table class="table" id="tabitemrequisicao">
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">Produto</th>
+                                <th style="width: 20%;">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr id="RowValorTotal">
+                                <td></td>
+                                <td>Valor Total</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    var descricao;
+    var preco;
+    var exameid;
+
+    function addFunction(produto) {
+        var indice = $('#exames option:selected').val() - 1;
+        console.log("carregarajax");
+        carregaajax(indice + 1);
+        console.log("carregdo...");
+        var rowtab = '<tr id="row_' + indice + '"><td > ' + descricao + ' </td><td class="valor-calculado">' + preco.toLocaleString('pt-br', { minimumFractionDigits: 2 }); + ' </td>' +
+            '<td><button type="button" id="btnRemove" onclick="removeFunction(' + indice + ')" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></button></td></tr>'
+        $("#tabitemrequisicao").show().append(rowtab);
+        atualizarPrecoTotal();
+        //gravarItemTemporario(exameid, preco);
+    };
+
+    function removeFunction(id) {
+        $("#row_" + id).remove();
+        atualizarPrecoTotal();
+    };
+
+    function atualizarPrecoTotal() {
+        var valorCalculado = 0;
+
+        $(".valor-calculado").each(function () {
+            valorCalculado += parseFloat($(this).text());
+        });
+        valorCalculado = parseFloat(valorCalculado.toFixed(2))
+
+        $("#RowValorTotal")[0].cells[2].innerHTML = valorCalculado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+    }
+
+    function gravarItemTemporario(exameid, preco) {
+        var str2 = '@(ViewBag.IdTemporario)';
+        console.log(str2);
+        console.log(exameid);
+        console.log(preco);
+        var api = document.location.origin + "/api/ApiExame/";
+        $.ajax({
+            type: "GET",
+            url: api + idTemporario + '/' + exameid + '/' + preco,
+            async: false,
+            timeout: 8000,
+            contentType: "application/json; charset=utf-8",
+            success: function (result, jqXHR) {
+                console.log(result);
+            },
+            error: function (jqXHR, status) {
+                setTimeout(function () {
+                    console.log('Erro');
+                }, 300);
+            },
+        });
+    }
+
+    function carregaajax(x) {
+        var api = document.location.origin + "/api/ApiExame/";
+        $.ajax({
+            type: "GET",
+            url: api + x,
+            async: false,
+            timeout: 8000,
+            contentType: "application/json; charset=utf-8",
+            success: function (result, jqXHR) {
+                descricao = result["descricao"];
+                preco = result["preco"];
+                exameid = result["id"];
+            },
+            error: function (jqXHR, status) {
+                setTimeout(function () {
+                    console.log('Erro');
+                }, 300);
+            },
+        });
+    }
+
+</script>

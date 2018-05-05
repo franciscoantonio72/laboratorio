@@ -1,0 +1,42 @@
+﻿@model Laboratorio.Models.TabelaPreco
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TabelaPreco</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataCadastro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Convenio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Convenio.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PostoColeta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PostoColeta.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,48 @@
+﻿@model Laboratorio.Models.Exame
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Exame</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataCadastro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sinonimo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sinonimo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
