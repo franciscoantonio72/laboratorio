@@ -1,11 +1,5 @@
 ﻿@model Laboratorio.Models.Requisicao
 
-@{ 
-    var teste = ViewData["IdTemporario"];
-}
-
-<h2>Create</h2>
-
 <h4>Requisicao</h4>
 <hr />
 <div class="row">
@@ -96,14 +90,12 @@
 
     function addFunction(produto) {
         var indice = $('#exames option:selected').val() - 1;
-        console.log("carregarajax");
         carregaajax(indice + 1);
-        console.log("carregdo...");
-        var rowtab = '<tr id="row_' + indice + '"><td > ' + descricao + ' </td><td class="valor-calculado">' + preco.toLocaleString('pt-br', { minimumFractionDigits: 2 }); + ' </td>' +
+        var rowtab = '<tr id="row_' + indice + '"><td > ' + descricao + ' </td><td class="valor-calculado">' + preco.toLocaleString('pt-br', { minimumFractionDigits: 2 }) + ' </td>' +
             '<td><button type="button" id="btnRemove" onclick="removeFunction(' + indice + ')" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></button></td></tr>'
         $("#tabitemrequisicao").show().append(rowtab);
         atualizarPrecoTotal();
-        //gravarItemTemporario(exameid, preco);
+        gravarItemTemporario(exameid, preco);
     };
 
     function removeFunction(id) {
@@ -123,11 +115,12 @@
     }
 
     function gravarItemTemporario(exameid, preco) {
-        var str2 = '@(ViewBag.IdTemporario)';
-        console.log(str2);
+        var idTemporario = '@(ViewBag.IdTemporario)';
+        console.log(idTemporario);
         console.log(exameid);
         console.log(preco);
         var api = document.location.origin + "/api/ApiExame/";
+        console.log(api + idTemporario + '/' + exameid + '/' + preco);
         $.ajax({
             type: "GET",
             url: api + idTemporario + '/' + exameid + '/' + preco,
@@ -135,7 +128,7 @@
             timeout: 8000,
             contentType: "application/json; charset=utf-8",
             success: function (result, jqXHR) {
-                console.log(result);
+                console.log('Gravado cmo sucesso!!');
             },
             error: function (jqXHR, status) {
                 setTimeout(function () {

@@ -33,6 +33,8 @@ namespace Laboratorio
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors();
+            /*
             services.AddCors( o =>
             {
                 o.AddPolicy("Everything", p =>
@@ -43,6 +45,7 @@ namespace Laboratorio
                     .AllowCredentials();
                 });
             });
+            */
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -62,7 +65,10 @@ namespace Laboratorio
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseCors("Everything");
+
+            app.UseCors(
+                options => options.WithOrigins("http://*:80").AllowAnyMethod()
+            );
 
             app.UseStaticFiles();
 
