@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
     <h4>Requisicao</h4>
@@ -21,6 +21,30 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataEntrega)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Convenio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Convenio.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Paciente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Paciente.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PostoColeta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PostoColeta.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Solicitante)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Solicitante.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Valor)
@@ -40,39 +64,8 @@
         <dd>
             @Html.DisplayFor(model => model.Total)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Convenio)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Convenio.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Exame)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Exame.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Paciente)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Paciente.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PostoColeta)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PostoColeta.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Solicitante)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Solicitante.Id)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>

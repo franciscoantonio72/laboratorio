@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,6 @@ namespace Laboratorio.Models
         [DataType(DataType.Date)]
         public DateTime DataCadastro { get; set; }
         [Display(Name = "Data Entrega")]
-        [DataType(DataType.Date)]
         public DateTime DataEntrega { get; set; }
         public virtual Paciente Paciente { get; set; }
         public int PacienteId { get; set; }
@@ -28,6 +28,7 @@ namespace Laboratorio.Models
         public double Valor { get; set; }
         public double Desconto { get; set; }
         public double Total { get; set; }
+        public Guid IdTemporario { get; set; }
 
         public virtual ICollection<ItemRequisicao> ItensRequisicao { get; set; }
     }

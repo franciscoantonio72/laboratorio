@@ -25,7 +25,7 @@ namespace Laboratorio
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -33,8 +33,6 @@ namespace Laboratorio
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddCors();
-            /*
             services.AddCors( o =>
             {
                 o.AddPolicy("Everything", p =>
@@ -45,7 +43,7 @@ namespace Laboratorio
                     .AllowCredentials();
                 });
             });
-            */
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -66,9 +64,7 @@ namespace Laboratorio
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseCors(
-                options => options.WithOrigins("http://*:80").AllowAnyMethod()
-            );
+            app.UseCors("Everything");
 
             app.UseStaticFiles();
 

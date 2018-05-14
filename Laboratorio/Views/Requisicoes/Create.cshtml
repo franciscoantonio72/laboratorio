@@ -34,6 +34,10 @@
                     <input asp-for="DataEntrega" class="form-control" />
                     <span asp-validation-for="DataEntrega" class="text-danger"></span>
                 </div>
+                <div class="col-md-4">
+                    <label asp-for="IdTemporario" class="control-label" style="display:none"></label>
+                    <input asp-for="IdTemporario" class="form-control" value=@ViewBag.IdTemporario type="hidden"/>
+                </div>
             </div>
             <div class="row form-group">
                 <div class="col-md-4">
@@ -69,14 +73,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Salvar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
 @section Scripts {

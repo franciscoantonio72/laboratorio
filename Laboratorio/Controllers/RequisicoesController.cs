@@ -13,18 +13,17 @@ namespace Laboratorio.Controllers
     public class RequisicoesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly Guid idTemporario;
+        public Guid idTemporario;
 
         public RequisicoesController(ApplicationDbContext context)
         {
             _context = context;
-            idTemporario = Guid.NewGuid();
         }
 
         // GET: Requisicoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Requisicao.Include(r => r.Convenio).Include(r => r.Exame).Include(r => r.Paciente).Include(r => r.PostoColeta).Include(r => r.Solicitante);
+            var applicationDbContext = _context.Requisicao.Include(r => r.Convenio).Include(r => r.Exame).Include(r => r.Paciente).Include(r => r.PostoColeta).Include(r => r.Solicitante).OrderByDescending(o => o.Id);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -59,7 +58,8 @@ namespace Laboratorio.Controllers
             ViewData["PacienteId"] = new SelectList(_context.Paciente, "Id", "Nome");
             ViewData["PostoColetaId"] = new SelectList(_context.PostoColeta, "Id", "Nome");
             ViewData["SolicitanteId"] = new SelectList(_context.Solicitante, "Id", "Nome");
-            
+
+            idTemporario = Guid.NewGuid();
             ViewData["IdTemporario"] = idTemporario;
 
             return View();
@@ -70,11 +70,12 @@ namespace Laboratorio.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataCadastro,DataEntrega,PacienteId,SolicitanteId,ConvenioId,PostoColetaId,ExameId,Valor,Desconto,Total")] Requisicao requisicao)
+        public async Task<IActionResult> Create([Bind("Id,DataCadastro,DataEntrega,PacienteId,SolicitanteId,ConvenioId,PostoColetaId,ExameId,Valor,Desconto,Total,IdTemporario")] Requisicao requisicao)
         {
+            double totalRequisicao = 0;
             if (ModelState.IsValid)
             {
-                IEnumerable<ItemRequisicaoTemp> _exames = _context.ItemRequisicaoTemp.Where(w => w.IdTemporario.Equals(idTemporario)).ToList();
+                IEnumerable<ItemRequisicaoTemp> _exames = _context.ItemRequisicaoTemp.Where(w => w.IdTemporario.Equals(requisicao.IdTemporario)).ToList();
                 requisicao.DataCadastro = DateTime.Now;
                 _context.Add(requisicao);
 
@@ -87,9 +88,11 @@ namespace Laboratorio.Controllers
                         RequisicaoId = requisicao.Id,
                         Valor = item.Valor
                     };
+                    totalRequisicao += item.Valor;
                     _context.ItemRequisicao.Add(exame);
                 }
-               
+                requisicao.Valor = totalRequisicao;
+                requisicao.Total = totalRequisicao;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
