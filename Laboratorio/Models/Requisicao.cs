@@ -16,14 +16,19 @@ namespace Laboratorio.Models
         [Display(Name = "Data Entrega")]
         public DateTime DataEntrega { get; set; }
         public virtual Paciente Paciente { get; set; }
+        [Display(Name = "Paciente")]
         public int PacienteId { get; set; }
         public virtual Solicitante Solicitante { get; set; }
+        [Display(Name = "Solicitante")]
         public int SolicitanteId { get; set; }
         public virtual Convenio Convenio { get; set; }
+        [Display(Name = "Convenio")]
         public int ConvenioId { get; set; }
         public virtual PostoColeta PostoColeta { get; set; }
+        [Display(Name = "Posto Coleta")]
         public Guid PostoColetaId { get; set; }
         public virtual Exame Exame { get; set; }
+        [Display(Name = "Exame")]
         public int ExameId { get; set; }
         public double Valor { get; set; }
         public double Desconto { get; set; }

@@ -58,6 +58,7 @@ namespace Laboratorio.Controllers
         {
             if (ModelState.IsValid)
             {
+                exame.DataCadastro = DateTime.Now;
                 _context.Add(exame);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

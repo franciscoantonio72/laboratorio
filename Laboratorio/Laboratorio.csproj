@@ -6,13 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Exames\**" />
     <Compile Remove="Views\Pacientes\**" />
-    <Content Remove="Views\Exames\**" />
     <Content Remove="Views\Pacientes\**" />
-    <EmbeddedResource Remove="Views\Exames\**" />
     <EmbeddedResource Remove="Views\Pacientes\**" />
-    <None Remove="Views\Exames\**" />
     <None Remove="Views\Pacientes\**" />
   </ItemGroup>
 
@@ -37,11 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Exames\Create.cshtml" />
-    <None Include="Views\Exames\Delete.cshtml" />
-    <None Include="Views\Exames\Details.cshtml" />
-    <None Include="Views\Exames\Edit.cshtml" />
-    <None Include="Views\Exames\Index.cshtml" />
     <None Include="Views\Pacientes\Create.cshtml" />
     <None Include="Views\Pacientes\Delete.cshtml" />
     <None Include="Views\Pacientes\Details.cshtml" />
